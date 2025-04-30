@@ -41,23 +41,29 @@ tabla = diferencias_divididas(x_vals, y_vals)
 # Obtener coeficientes ai
 coeficientes = [round(float(tabla[f'Orden {j}'][0]), 2) for j in range(len(x_vals))]
 
-# Construcción explícita del polinomio
+# Construcción simbólica del polinomio (usando sympy)
 x_sym = sp.symbols('x')
 polinomio = coeficientes[0]
-expresion = f"a0 = {coeficientes[0]}"
+terminos = [f"{coeficientes[0]}"]
 
 for j in range(1, len(coeficientes)):
-    term = coeficientes[j]
+    producto = 1
+    term_text = f"{coeficientes[j]}"
     for i in range(j):
-        term *= (x_sym - x_vals[i])
-    polinomio += term
-    expresion += f" + a{j} " + "".join([f"(x - {x_vals[i]})" for i in range(j)])
+        producto *= (x_sym - x_vals[i])
+        term_text += f"*(x - {x_vals[i]})"
+    polinomio += coeficientes[j] * producto
+    terminos.append(term_text)
 
-# Mostrar la tabla, los coeficientes y el polinomio expresado
+# Mostrar resultados
 print("\nTabla de diferencias divididas:")
 print(tabla)
 
 print("\nCoeficientes del polinomio interpolante:")
 print(coeficientes)
-print("\nPolinomio interpolante:")
-print(expresion)
+
+print("\nPolinomio interpolante (forma simbólica):")
+print(sp.expand(polinomio))
+
+print("\nPolinomio interpolante (forma explícita con coeficientes):")
+print(" + ".join(terminos))
