@@ -1,37 +1,63 @@
 import pandas as pd
-
-import pandas as pd
+import numpy as np
+import sympy as sp
 
 def diferencias_divididas(x, y):
     n = len(x)
-
-    # Cada orden será una lista
+    # ordenes[j][i] contendrá f[x_i, x_{i+1}, …, x_{i+j}]
     ordenes = [[] for _ in range(n)]
-    ordenes[0] = y.copy()  # Orden 0 son los valores de f(x)
+    ordenes[0] = y.copy()       # Orden 0: f[x_i] = y[i]
 
-    # Calcular ordenes superiores
-    for j in range(1, n):
-        for i in range(n - j):
-            numerador = ordenes[j - 1][i + 1] - ordenes[j - 1][i]
+    for j in range(1, n):       # Para cada orden j = 1, 2, …, n-1 - primera formula, segunda formula, etc
+        for i in range(n - j):  # Hay n–j valores de este orden
+            # Fórmula: (f[... en orden j-1 en i+1] – f[... en orden j-1 en i]) / (x[i+j] - x[i])
+            numerador   = ordenes[j - 1][i + 1] - ordenes[j - 1][i]
             denominador = x[i + j] - x[i]
-            valor = numerador / denominador
+            valor       = numerador / denominador
             ordenes[j].append(valor)
-        # Rellenamos con None para que todas las listas tengan el mismo largo
+        # Relleno con None para alinear la tabla (opcional, solo para mostrar)
         ordenes[j] += [None] * j
 
-    # Crear diccionario con datos para el DataFrame
+    # Construye un DataFrame para presentar:
     data = {'x': x}
     for j in range(n):
         data[f'Orden {j}'] = ordenes[j]
 
-    # Crear el DataFrame directamente
-    tabla = pd.DataFrame(data)
-    return tabla
+    return pd.DataFrame(data)
+#----------------entradas-----------------#
+def f(x):
+    return np.log(2 * x)
 
 
-x = [1, 2, 4, 7]
-y = [3, 6, 9, 15]  # Por ejemplo, puede ser f(x) = 2x + 1 o algo más complejo
+x_vals = [1.0, 1.3, 1.6, 1.9, 2.2]
+#------------------------------------------#
+y_vals = [ f(x) for x in x_vals]
+#------------------------------------------#
 
-tabla_dd = diferencias_divididas(x, y)
-print("Tabla de diferencias divididas:")
-print(tabla_dd)
+# Construir la tabla
+tabla = diferencias_divididas(x_vals, y_vals)
+
+
+# Obtener coeficientes ai
+coeficientes = [round(float(tabla[f'Orden {j}'][0]), 2) for j in range(len(x_vals))]
+
+# Construcción explícita del polinomio
+x_sym = sp.symbols('x')
+polinomio = coeficientes[0]
+expresion = f"a0 = {coeficientes[0]}"
+
+for j in range(1, len(coeficientes)):
+    term = coeficientes[j]
+    for i in range(j):
+        term *= (x_sym - x_vals[i])
+    polinomio += term
+    expresion += f" + a{j} " + "".join([f"(x - {x_vals[i]})" for i in range(j)])
+
+# Mostrar la tabla, los coeficientes y el polinomio expresado
+print("\nTabla de diferencias divididas:")
+print(tabla)
+
+print("\nCoeficientes del polinomio interpolante:")
+print(coeficientes)
+print("\nPolinomio interpolante:")
+print(expresion)

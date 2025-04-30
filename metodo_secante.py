@@ -1,4 +1,7 @@
+#para encontrar raices
+
 import pandas as pd
+import numpy as np
 
 def secante(f, x0, x1, tol=1e-6, max_iter=100):
 
@@ -45,9 +48,9 @@ def secante(f, x0, x1, tol=1e-6, max_iter=100):
     return x2, df
 
 def f(x):
-    return x**3 - x - 2
+    return np.cos(x)
 
-raiz, tabla_resultados = secante(f, x0=1, x1=2, tol=1e-5)
+raiz, tabla_resultados = secante(f, x0=np.pi/4, x1=2, tol=1e-5)
 print("Raíz aproximada:", raiz)
 print("\nTabla de iteraciones:")
 print(tabla_resultados)

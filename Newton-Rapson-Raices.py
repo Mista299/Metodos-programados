@@ -1,6 +1,6 @@
 import sympy as sp
 import matplotlib.pyplot as plt
-matplotlib.use('Qt5Agg')
+# matplotlib.use('Qt5Agg') /////////////// 
 import numpy as np
 
 def newton_raphson(f_expr, x0, tolerance=1e-7, max_iterations=1000):
@@ -25,7 +25,7 @@ def newton_raphson(f_expr, x0, tolerance=1e-7, max_iterations=1000):
     x_n = x0
     errors = []
     values = []
-    
+        
     print(f"{'Iteración':<10} {'x_n':<20} {'f(x_n)':<20} {'Error':<20}")
     print("-" * 70)
     
@@ -56,38 +56,39 @@ def newton_raphson(f_expr, x0, tolerance=1e-7, max_iterations=1000):
     fig, ax = plt.subplots(1, 2, figsize=(14, 6))
 
     # Graficar la función con la raíz en la primera subgráfica
-    x_vals = np.linspace(x0 - 5, x0 + 5, 400)
-    f_vals = [f(xi) for xi in x_vals]
+    # x_vals = np.linspace(x0 - 5, x0 + 5, 400)
+    # f_vals = [f(xi) for xi in x_vals]
     
-    ax[0].plot(x_vals, f_vals, label="f(x)")
-    ax[0].plot(x_n, f(x_n), 'ro', label=f"Raíz = {x_n:.6f}")  # Punto rojo en la raíz
-    ax[0].axhline(0, color='black',linewidth=1)
-    ax[0].axvline(x_n, color='red', linestyle='--')
-    ax[0].set_title("Función f(x) y raíz")
-    ax[0].set_xlabel("x")
-    ax[0].set_ylabel("f(x)")
-    ax[0].legend()
+    # ax[0].plot(x_vals, f_vals, label="f(x)")
+    # ax[0].plot(x_n, f(x_n), 'ro', label=f"Raíz = {x_n:.6f}")  # Punto rojo en la raíz
+    # ax[0].axhline(0, color='black',linewidth=1)
+    # ax[0].axvline(x_n, color='red', linestyle='--')
+    # ax[0].set_title("Función f(x) y raíz")
+    # ax[0].set_xlabel("x")
+    # ax[0].set_ylabel("f(x)")
+    # ax[0].legend()
 
-    # Graficar la evolución del error en la segunda subgráfica
-    ax[1].plot(range(len(errors)), errors, marker='o', linestyle='-', color='b')
-    ax[1].set_yscale('log')  # Escala logarítmica para observar mejor la convergencia
-    ax[1].set_xlabel('Iteración')
-    ax[1].set_ylabel('Error')
-    ax[1].set_title('Evolución del error')
-    ax[1].grid(True)
+    # # Graficar la evolución del error en la segunda subgráfica
+    # ax[1].plot(range(len(errors)), errors, marker='o', linestyle='-', color='b')
+    # ax[1].set_yscale('log')  # Escala logarítmica para observar mejor la convergencia
+    # ax[1].set_xlabel('Iteración')
+    # ax[1].set_ylabel('Error')
+    # ax[1].set_title('Evolución del error')
+    # ax[1].grid(True)
 
-    plt.tight_layout()
-    plt.show()
+    # plt.tight_layout()
+    # plt.show()
     
     return x_n, errors
 
 # Definimos la función simbólica y el valor inicial
 x = sp.symbols('x')
-f_expr = x**2 - 2  # Función f(x) = x^2 - 2
-x0 = 1.5
+f_expr = sp.cos(x)  # Función f(x) = x^2 - 2
+x0 = float(sp.pi) / 4
+
 
 # Ejecutamos el método de Newton-Raphson
-raiz, errores = newton_raphson(f_expr, x0)
+raiz, errores = newton_raphson(f_expr, x0, tolerance=0.001, max_iterations=4)
 
 if raiz is not None:
     print(f"\nLa raíz aproximada es: {raiz}")
