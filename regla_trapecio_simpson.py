@@ -37,39 +37,6 @@ def trapecio_compuesta(f, f2_prime, a, b, n, e):
 
     return [r, error]
 
-    """
-    Regla del trapecio compuesta para n subintervalos, con estimación de error.
-    """
-    h = (b - a) / n
-    suma = f(a) + f(b)
-
-    for i in range(1, n):
-        xi = a + i * h
-        suma += 2 * f(xi)
-
-    r = (h / 2) * suma
-
-    # Estimación del error usando la fórmula: -(b-a)/(12n^2) * f''(ξ)
-    # Usamos el punto medio del intervalo para ξ
-    xi = (a + b) / 2
-    error = ((b - a) / (12 * n**2)) * f2_prime(xi)
-
-    return [r, error]
-
-    """
-    Regla del trapecio compuesta para n subintervalos.
-    """
-    h = (b - a) / n
-    suma = f(a) + f(b)
-
-    for i in range(1, n):
-        xi = a + i * h
-        suma += 2 * f(xi)
-
-    r = (h / 2) * suma
-    return [r, error]
-
-
 def regla_simpson(f, f4, x0, x2, e):
     """
     Regla de Simpson (n=2) con estimación de error.
@@ -142,7 +109,7 @@ def regla_punto_medio_compuesta(f, f2_prime, a, b, n, e):
 
 x = sp.symbols('x')
 # Definir la función simbólicamente
-f_expr = sp.exp(-x**2)
+f_expr = x**2 + 1
 f2_expr = sp.diff(f_expr, x, 4)
 f4_expr = sp.diff(f_expr, x, 4)
 
@@ -159,7 +126,7 @@ print(f"Resultado aproximado: {resultado}")
 print(f"error (Trapecio simple): {error_t}")
 
 n = 100
-resultado, error_tc = trapecio_compuesta(f, f2_prime, 0, 1, n, 0.5)
+resultado, error_tc = trapecio_compuesta(f, f2_prime, 1, 2, n, 0.5)
 print("-----------------Trapecio compuesto-----------------")
 print(f"Resultado con {n} subintervalos: {resultado}")
 print(f"Error estimado (Trapecio compuesto): {error_tc}")
@@ -173,7 +140,7 @@ print(f"Error estimado (Trapecio compuesto): {error_s}")
 
 print("-----------------Regla Simpson 3/8-----------------")
 # Simpson 3/8 n=3
-resultado_3_8, error_s3_8 = regla_simpson_3_8(f, f4_prime, 0, 1, 0.5)
+resultado_3_8, error_s3_8 = regla_simpson_3_8(f, f4_prime, 1, 2, 0.5)
 print(f"Resultado Simpson 3/8 (n=3): {resultado_3_8}")
 print(f"Error estimado (Trapecio compuesto): {error_s3_8}")
 
