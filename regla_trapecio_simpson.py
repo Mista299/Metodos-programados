@@ -33,7 +33,7 @@ def trapecio_compuesta(f, f2_prime, a, b, n, e):
 
     # Estimación del error usando la fórmula: -(b-a)/(12n^2) * f''(ξ)
     # Usamos el punto medio del intervalo para ξ
-    error = ((b - a) / (12 * n**2)) * f2_prime(e)
+    error = round(((b - a) / (12 * n**2)) * f2_prime(e), 6)
 
     return [r, error]
 
@@ -85,7 +85,7 @@ def regla_simpson_compuesta(f, f4_prime, a, b, n, e):
         suma += peso * f(xi)
 
     resultado = (h / 3) * suma
-    error = ((b - a) * h**4 / 180) * f4_prime(e)
+    error = round(((b - a) * h**4 / 180) * f4_prime(e),6)
 
     return [resultado, error]
 
@@ -110,7 +110,7 @@ def regla_punto_medio_compuesta(f, f2_prime, a, b, n, e):
 x = sp.symbols('x')
 # Definir la función simbólicamente
 f_expr = x**2 + 1
-f2_expr = sp.diff(f_expr, x, 4)
+f2_expr = sp.diff(f_expr, x, 2)
 f4_expr = sp.diff(f_expr, x, 4)
 
 f = sp.lambdify(x, f_expr, modules=['math'])
@@ -120,7 +120,7 @@ f4_prime = sp.lambdify(x, f4_expr, modules=['math'])
 
 
 # Convertir expresiones simbólicas a funciones numéricas
-resultado, error_t = trapecio(f, f2_prime, 0, 1, 0.5)
+resultado, error_t = trapecio(f, f2_prime, 1, 2, 0.5)
 print("-----------------Trapecio simple-----------------")
 print(f"Resultado aproximado: {resultado}")
 print(f"error: {error_t}")
@@ -134,7 +134,7 @@ print(f"Error estimado: {error_tc}")
 
 # Simpson n=2
 print("-----------------Regla Simpson-----------------")
-resultado_simpson, error_s = regla_simpson(f, f4_prime, 0, 1, 0.5)
+resultado_simpson, error_s = regla_simpson(f, f4_prime, 1, 2, 0.5)
 print(f"Resultado Simpson (n=2): {resultado_simpson}")
 print(f"Error estimado: {error_s}")
 
@@ -145,11 +145,11 @@ print(f"Resultado Simpson 3/8 (n=3): {resultado_3_8}")
 print(f"Error estimado: {error_s3_8}")
 
 print("-----------------Simpson compuesta-----------------")
-resultado_s_comp, error_s_comp = regla_simpson_compuesta(f, f4_prime, 0, 1, 4, 0.5)
+resultado_s_comp, error_s_comp = regla_simpson_compuesta(f, f4_prime, 1, 2, 4, 0.5)
 print(f"Resultado Simpson compuesta (n=4): {resultado_s_comp}")
 print(f"Error estimado: {error_s_comp}")
 
 print("-----------------Punto medio compuesta-----------------")
-resultado_pm, error_pm = regla_punto_medio_compuesta(f, f2_prime, 0, 1, 6, 0.5)
+resultado_pm, error_pm = regla_punto_medio_compuesta(f, f2_prime, 1, 2, 6, 0.5)
 print(f"Resultado Punto medio compuesta (n=6): {resultado_pm}")
 print(f"Error estimado: {error_pm}")
