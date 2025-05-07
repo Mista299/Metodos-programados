@@ -123,26 +123,26 @@ f4_prime = sp.lambdify(x, f4_expr, modules=['math'])
 resultado, error_t = trapecio(f, f2_prime, 0, 1, 0.5)
 print("-----------------Trapecio simple-----------------")
 print(f"Resultado aproximado: {resultado}")
-print(f"error (Trapecio simple): {error_t}")
+print(f"error: {error_t}")
 
 n = 100
 resultado, error_tc = trapecio_compuesta(f, f2_prime, 1, 2, n, 0.5)
 print("-----------------Trapecio compuesto-----------------")
 print(f"Resultado con {n} subintervalos: {resultado}")
-print(f"Error estimado (Trapecio compuesto): {error_tc}")
+print(f"Error estimado: {error_tc}")
 
 
 # Simpson n=2
 print("-----------------Regla Simpson-----------------")
 resultado_simpson, error_s = regla_simpson(f, f4_prime, 0, 1, 0.5)
 print(f"Resultado Simpson (n=2): {resultado_simpson}")
-print(f"Error estimado (Trapecio compuesto): {error_s}")
+print(f"Error estimado: {error_s}")
 
 print("-----------------Regla Simpson 3/8-----------------")
 # Simpson 3/8 n=3
 resultado_3_8, error_s3_8 = regla_simpson_3_8(f, f4_prime, 1, 2, 0.5)
 print(f"Resultado Simpson 3/8 (n=3): {resultado_3_8}")
-print(f"Error estimado (Trapecio compuesto): {error_s3_8}")
+print(f"Error estimado: {error_s3_8}")
 
 print("-----------------Simpson compuesta-----------------")
 resultado_s_comp, error_s_comp = regla_simpson_compuesta(f, f4_prime, 0, 1, 4, 0.5)
