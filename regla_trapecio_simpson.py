@@ -1,5 +1,9 @@
+#Maria Fernanda Atencia Oliva
+#Michael Stiven Tabares Tobón
+
 import sympy as sp
 import math
+
 
 def trapecio(f, f2_prime, a, b, e):
     """

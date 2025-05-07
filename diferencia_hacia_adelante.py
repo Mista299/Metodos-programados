@@ -1,3 +1,6 @@
+#Maria Fernanda Atencia Oliva
+#Michael Stiven Tabares Tobón
+
 import sympy as sp
 import pandas as pd
 

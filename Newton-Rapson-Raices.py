@@ -1,3 +1,6 @@
+#Maria Fernanda Atencia Oliva
+#Michael Stiven Tabares Tobón
+
 import sympy as sp
 import matplotlib.pyplot as plt
 # matplotlib.use('Qt5Agg') /////////////// 

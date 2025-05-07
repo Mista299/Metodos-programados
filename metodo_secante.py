@@ -1,5 +1,8 @@
 #para encontrar raices
 
+#Maria Fernanda Atencia Oliva
+#Michael Stiven Tabares Tobón
+
 import pandas as pd
 import numpy as np
 
