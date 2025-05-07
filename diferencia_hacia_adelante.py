@@ -110,8 +110,8 @@ def diferencia_5_puntos(f_expr, x0, h, max_iterations=5):
 
 #Se añade la funcion y un punto
 x = sp.symbols('x')
-f_expr = sp.tan(x)
-x0 = sp.pi/4
+f_expr = x*sp.exp(x)
+x0 = 0.5
 print(x0)
 #----------------------------------#
 
@@ -121,7 +121,7 @@ print(tabla_iteraciones)
 print("---------diferencias hacia atras----------")
 tabla_iteraciones2 = diferencia_hacia_atras(f_expr, x0, h=1)
 print(tabla_iteraciones2)
-print("---------diferencias centradas----------")
+print("---------diferencias centradas (3 puntos)----------")
 tabla_iteraciones3 = diferencia_centrada(f_expr, x0, h=1)
 print(tabla_iteraciones3)
 print("---------diferencias centradas de 5 puntos----------")

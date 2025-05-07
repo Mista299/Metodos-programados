@@ -86,12 +86,12 @@ def newton_raphson(f_expr, x0, tolerance=1e-7, max_iterations=1000):
 
 # Definimos la función simbólica y el valor inicial
 x = sp.symbols('x')
-f_expr = sp.cos(x)  # Función f(x) = x^2 - 2
+f_expr = sp.sin(x) - x  # Función f(x) = x^2 - 2
 x0 = float(sp.pi) / 4
 
 
 # Ejecutamos el método de Newton-Raphson
-raiz, errores = newton_raphson(f_expr, x0, tolerance=0.001, max_iterations=4)
+raiz, errores = newton_raphson(f_expr, x0, tolerance=0.001, max_iterations=5)
 
 if raiz is not None:
     print(f"\nLa raíz aproximada es: {raiz}")
